@@ -12,13 +12,13 @@
     <div class="main w-full min-h-screen bg-zinc-900 p-10 text-white ">
         <a class="text-blue-500 inline-block" href="/">Go back to home</a>
         <h1 class="text-3xl tracking-tighter mt-10">
-            <%= filename %>
+            <%= note.title %>
         </h1>
         <p class="text-xl mt-2 font-light">
-            <%= data %>
+            <%= note.content %>
         </p>
         <div class="mt-3">
-        <form action="/edit/<%= filename %>"  method="get">
+        <form action="/edit/<%= note._id %>"  method="get">
                             <button type="submit"
                                 class="mt-3 bg-yellow-500 px-5 py-2 rounded-md text-white">
                                 Edit Filename

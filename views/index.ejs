@@ -1,54 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <title>Notes App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div class="main w-full min-h-screen bg-zinc-900">
-        <div class="form p-10 text-white">
-            <form action="/create" method="post">
-                <input class="block px-5 py-2 w-full rounded-md outline-none  bg-zinc-800" type="text"
-                    placeholder="Title goes here" name="title">
-                <textarea class="block px-5 py-2 w-full h-40 rounded-md outline-none mt-2 resize-none bg-zinc-800"
-                    placeholder="Write your task details here" name="details"></textarea>
-                <input class="mt-2 bg-blue-600 px-5 py-2 rounded-md" type="submit" value="Create Task">
-            </form>
-        </div>
-        <div class="tasks p-10 flex gap-5 flex-wrap">
-            <% if(files.length>0){%>
-                <%files.forEach((val)=> {%>
-                    <div class="task min-w-50 rounded-md px-5 py-5 bg-zinc-800">
-                        <h1 class="text-white text-3xl tracking-tighter">
-                            <%= val %>
-                        </h1>
-                        <a class="text-blue-500 mt-3" href=" /files/<%= val %>">Read more</a>
-                        <div class="mt-3">
-                            <form action="/edit/<%= val %>" method="get">
-                            <button type="submit"
-                                class="mt-3 bg-yellow-500 px-5 py-2 rounded-md text-white">
-                                Edit Filename
-                            </button>
-                        </form>
-                        <form action="/delete/<%= val %>" method="post">
-                            <button type="submit" class="mt-2 bg-red-500 px-5 py-2 rounded-md text-white">
-                                Delete
-                            </button>
-                        </form></div>
-                    </div>
-                    <% }) %>
-                        <%} else { %>
-                            <h3 class="text-zinc-600 text-3xl tracking-tighter">No Tasks here</h3>
-                            <% } %>
+<body class="bg-zinc-900 min-h-screen text-white">
 
-        </div>
-    </div>
+  <div class="max-w-4xl mx-auto p-6">
 
-    <script src="\js\script.js"></script>
+    <h1 class="text-3xl font-bold mb-6">
+      Welcome to your Notes App
+    </h1>
+
+    <!-- Create Note -->
+    <form action="/create" method="POST" class="space-y-4 mb-10">
+      <input
+        type="text"
+        name="title"
+        placeholder="Title goes here"
+        class="w-full p-3 rounded bg-zinc-800 outline-none"
+        required
+      />
+
+      <textarea
+        name="details"
+        placeholder="Write your task details here"
+        class="w-full p-3 rounded bg-zinc-800 outline-none h-32"
+        required
+      ></textarea>
+
+      <button
+        class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Create Task
+      </button>
+    </form>
+
+    <!-- Notes List -->
+    <% if (files.length === 0) { %>
+      <p class="text-zinc-400">No notes yet.</p>
+    <% } else { %>
+      <div class="grid gap-6">
+        <% files.forEach(file => { %>
+          <div class="bg-zinc-800 p-5 rounded">
+            <h3 class="text-xl font-semibold mb-2">
+              <%= file.title %>
+            </h3>
+
+            <p class="text-zinc-300 mb-3">
+              <%= file.content.length > 100
+                ? file.content.substring(0, 100) + "..."
+                : file.content
+              %>
+            </p>
+
+            <div class="flex gap-4">
+              <a
+                href="/files/<%= file._id %>"
+                class="text-blue-400 hover:underline"
+              >
+                Read more
+              </a>
+
+              <a
+                href="/edit/<%= file._id %>"
+                class="text-yellow-400 hover:underline"
+              >
+                Edit
+              </a>
+
+              <form
+                action="/delete/<%= file._id %>"
+                method="POST"
+              >
+                <button class="text-red-400 hover:underline">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+  </div>
+
 </body>
-
 </html>

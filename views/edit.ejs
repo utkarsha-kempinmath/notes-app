@@ -14,9 +14,9 @@
         <div class="form py-5 text-white">
             <form action="/edit" method="post">
                 <input class="block text-zinc-400 mt-5 mb-5 px-5 py-2 w-1/4 rounded-md outline-none bg-zinc-800" readonly type="text"
-                placeholder="Previous Name" name="title" value="<%= filename %>">
+                placeholder="Previous Name" name="title" value="<%= note._id %>">
                 <input class="block px-5 py-2 w-1/4 rounded-md outline-none  bg-zinc-800" type="text"
-                    placeholder="New Title" name="newTitle">
+                    placeholder="New Title" name="newTitle" value="<%= note.title %>">
                 <input class="mt-5 bg-yellow-600 px-5 py-2 rounded-md" type="submit" value="Update Name">
             </form>
         </div>
